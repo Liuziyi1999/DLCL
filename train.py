@@ -70,71 +70,19 @@ def extend_cfg(cfg):
     from yacs.config import CfgNode as CN
 
     cfg.MODEL.BACKBONE.PATH = "./assets"
+    # Config for independent Vision Language prompting (independent-vlp)
     cfg.TRAINER.DCOP = CN()
-    cfg.TRAINER.DCOP.N_DMX = 2  # number of DSC tokens
-    cfg.TRAINER.DCOP.N_CTX = 2  # number of context vectors
-    cfg.TRAINER.DCOP.CSC = False  # class-specific context
-    cfg.TRAINER.DCOP.PREC = "amp"  # fp16, fp32, amp
-    cfg.TRAINER.DCOP.T = 1.0
+    cfg.TRAINER.DCOP.N_CTX_VISION = 2  # number of context vectors at the vision branch
+    cfg.TRAINER.DCOP.N_CTX_TEXT = 2  # number of context vectors at the language branch
+    cfg.TRAINER.DCOP.CTX_INIT = "a photo of a"  # initialization words (only for language prompts)
+    cfg.TRAINER.DCOP.PREC = "fp16"  # fp16, fp32, amp
+    # If both variables below are set to 0, 0, will the config will degenerate to COOP model
+    cfg.TRAINER.DCOP.PROMPT_DEPTH_VISION = 9 # Max 12, minimum 0, for 0 it will act as shallow MaPLe (J=1)
+    cfg.TRAINER.DCOP.PROMPT_DEPTH_TEXT = 9  # Max 12, minimum 0, for 0 it will act as shallow MaPLe (J=1)
     cfg.TRAINER.DCOP.TAU = 0.8
     cfg.TRAINER.DCOP.U = 1.0
-    cfg.TRAINER.DCOP.PROMPT_DEPTH = 1
-    cfg.TRAINER.DCOP.PROMPT_DEPTH_VISION = 1
-    cfg.TRAINER.DCOP.PROMPT_DEPTH_TEXT = 1
-    cfg.TRAINER.DCOP.N_CTX_VISION = 2
-    cfg.TRAINER.DCOP.N_CTX_TEXT = 2
-    cfg.TRAINER.DCOP.CTX_INIT = "a photo of a"
-
-    # cfg.DATALOADER.TRAIN_X.SAMPLER = "RandomSampler"
-    # cfg.DATALOADER.TRAIN_U.SAMPLER = "RandomSampler"
-
-    cfg.TRAINER.COOP = CN()
-    cfg.TRAINER.COOP.N_CTX = 4  # number of context vectors 4
-    cfg.TRAINER.COOP.CSC = False  # class-specific context
-    cfg.TRAINER.COOP.CTX_INIT = ""  # initialization words
-    cfg.TRAINER.COOP.PREC = "fp16"  # fp16, fp32, amp
-    cfg.TRAINER.COOP.CLASS_TOKEN_POSITION = "end"  # 'middle' or 'end' or 'front'
-    cfg.TRAINER.COOP.UNKNOWN_THRESHOLD = 0.8
-
-
-    cfg.TRAINER.COCOOP = CN()
-    cfg.TRAINER.COCOOP.N_CTX = 16  # number of context vectors
-    cfg.TRAINER.COCOOP.CTX_INIT = ""  # initialization words
-    cfg.TRAINER.COCOOP.PREC = "fp16"  # fp16, fp32, amp
-    cfg.TRAINER.COCOOP.UNKNOWN_THRESHOLD = 0.8
-
-    # Config for MaPLe
-    cfg.TRAINER.MAPLE = CN()
-    cfg.TRAINER.MAPLE.N_CTX = 2  # number of context vectors
-    cfg.TRAINER.MAPLE.N_DMX = 2
-    cfg.TRAINER.MAPLE.CTX_INIT = "a photo of a"  # initialization words
-    cfg.TRAINER.MAPLE.PREC = "fp16"  # fp16, fp32, amp
-    cfg.TRAINER.MAPLE.PROMPT_DEPTH = 9 # Max 12, minimum 0, for 1 it will act as shallow MaPLe (J=1)
-    cfg.TRAINER.MAPLE.UNKNOWN_THRESHOLD = 0.5
-
-
-    # Config for independent Vision Language prompting (independent-vlp)
-    cfg.TRAINER.IVLP = CN()
-    cfg.TRAINER.IVLP.N_CTX_VISION = 2  # number of context vectors at the vision branch
-    cfg.TRAINER.IVLP.N_CTX_TEXT = 2  # number of context vectors at the language branch
-    cfg.TRAINER.IVLP.CTX_INIT = "a photo of a"  # initialization words (only for language prompts)
-    cfg.TRAINER.IVLP.PREC = "fp16"  # fp16, fp32, amp
-    # If both variables below are set to 0, 0, will the config will degenerate to COOP model
-    cfg.TRAINER.IVLP.PROMPT_DEPTH_VISION = 9 # Max 12, minimum 0, for 0 it will act as shallow MaPLe (J=1)
-    cfg.TRAINER.IVLP.PROMPT_DEPTH_TEXT = 9  # Max 12, minimum 0, for 0 it will act as shallow MaPLe (J=1)
-    cfg.TRAINER.IVLP.TAU = 0.8
-    cfg.TRAINER.IVLP.U = 1.0
-    cfg.TRAINER.IVLP.T = 1.0
-    cfg.TRAINER.IVLP.UNKNOWN_THRESHOLD = 0.5 
-
-    # Config for only vision side prompting
-    cfg.TRAINER.VPT = CN()
-    cfg.TRAINER.VPT.N_CTX_VISION = 2  # number of context vectors at the vision branch
-    cfg.TRAINER.VPT.CTX_INIT = "a photo of a"  # initialization words
-    cfg.TRAINER.VPT.PREC = "fp16"  # fp16, fp32, amp
-    cfg.TRAINER.VPT.PROMPT_DEPTH_VISION = 1  # if set to 1, will represent shallow vision prompting only
-    cfg.TRAINER.VPT.UNKNOWN_THRESHOLD = 0.5
-
+    cfg.TRAINER.DCOP.T = 1.0
+    cfg.TRAINER.DCOP.UNKNOWN_THRESHOLD = 0.5 
 
     cfg.DATASET.SUBSAMPLE_CLASSES = "all"  # all, base or new
     cfg.DATASET.OPEN_SET = False 
@@ -245,3 +193,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(args)
+
