@@ -9,24 +9,8 @@ from torch.cuda import init
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
-# custom
-from dassl.data.datasets import VisDA17
-from dassl.data.datasets import OfficeHome
+import trainers.DCOP
 
-
-
-# import trainers.adapt_shallow
-import trainers.cocoop
-import  trainers.coop
-import trainers.independentVL
-import trainers.maple
-import trainers.vpt
-import trainers.zsclip
-import trainers.dapl
-
-
-
-#打印命令行参数和配置信息
 def print_args(args, cfg):
     print("***************")
     print("** Arguments **")
@@ -40,7 +24,6 @@ def print_args(args, cfg):
     print("************")
     print(cfg)
 
-#根据命令行参数的值，重置配置参数
 def reset_cfg(cfg, args):
     if args.root:
         cfg.DATASET.ROOT = args.root
@@ -73,7 +56,6 @@ def reset_cfg(cfg, args):
         cfg.MODEL.HEAD.NAME = args.head
 
 
-#用于扩展配置参数，添加新的配置项。这里示例了一些DAPL的配置项。
 def extend_cfg(cfg):
     """
     Add new config variables.
@@ -88,20 +70,20 @@ def extend_cfg(cfg):
     from yacs.config import CfgNode as CN
 
     cfg.MODEL.BACKBONE.PATH = "./assets"
-    cfg.TRAINER.DAPL = CN()
-    cfg.TRAINER.DAPL.N_DMX = 2  # number of DSC tokens
-    cfg.TRAINER.DAPL.N_CTX = 2  # number of context vectors
-    cfg.TRAINER.DAPL.CSC = False  # class-specific context
-    cfg.TRAINER.DAPL.PREC = "amp"  # fp16, fp32, amp
-    cfg.TRAINER.DAPL.T = 1.0
-    cfg.TRAINER.DAPL.TAU = 0.8
-    cfg.TRAINER.DAPL.U = 1.0
-    cfg.TRAINER.DAPL.PROMPT_DEPTH = 1
-    cfg.TRAINER.DAPL.PROMPT_DEPTH_VISION = 1
-    cfg.TRAINER.DAPL.PROMPT_DEPTH_TEXT = 1
-    cfg.TRAINER.DAPL.N_CTX_VISION = 2
-    cfg.TRAINER.DAPL.N_CTX_TEXT = 2
-    cfg.TRAINER.DAPL.CTX_INIT = "a photo of a"
+    cfg.TRAINER.DCOP = CN()
+    cfg.TRAINER.DCOP.N_DMX = 2  # number of DSC tokens
+    cfg.TRAINER.DCOP.N_CTX = 2  # number of context vectors
+    cfg.TRAINER.DCOP.CSC = False  # class-specific context
+    cfg.TRAINER.DCOP.PREC = "amp"  # fp16, fp32, amp
+    cfg.TRAINER.DCOP.T = 1.0
+    cfg.TRAINER.DCOP.TAU = 0.8
+    cfg.TRAINER.DCOP.U = 1.0
+    cfg.TRAINER.DCOP.PROMPT_DEPTH = 1
+    cfg.TRAINER.DCOP.PROMPT_DEPTH_VISION = 1
+    cfg.TRAINER.DCOP.PROMPT_DEPTH_TEXT = 1
+    cfg.TRAINER.DCOP.N_CTX_VISION = 2
+    cfg.TRAINER.DCOP.N_CTX_TEXT = 2
+    cfg.TRAINER.DCOP.CTX_INIT = "a photo of a"
 
     # cfg.DATALOADER.TRAIN_X.SAMPLER = "RandomSampler"
     # cfg.DATALOADER.TRAIN_U.SAMPLER = "RandomSampler"
@@ -128,7 +110,6 @@ def extend_cfg(cfg):
     cfg.TRAINER.MAPLE.CTX_INIT = "a photo of a"  # initialization words
     cfg.TRAINER.MAPLE.PREC = "fp16"  # fp16, fp32, amp
     cfg.TRAINER.MAPLE.PROMPT_DEPTH = 9 # Max 12, minimum 0, for 1 it will act as shallow MaPLe (J=1)
-    # 添加未知类别检测阈值
     cfg.TRAINER.MAPLE.UNKNOWN_THRESHOLD = 0.5
 
 
@@ -144,7 +125,6 @@ def extend_cfg(cfg):
     cfg.TRAINER.IVLP.TAU = 0.8
     cfg.TRAINER.IVLP.U = 1.0
     cfg.TRAINER.IVLP.T = 1.0
-    # 添加未知类别检测阈值
     cfg.TRAINER.IVLP.UNKNOWN_THRESHOLD = 0.5 
 
     # Config for only vision side prompting
@@ -153,15 +133,13 @@ def extend_cfg(cfg):
     cfg.TRAINER.VPT.CTX_INIT = "a photo of a"  # initialization words
     cfg.TRAINER.VPT.PREC = "fp16"  # fp16, fp32, amp
     cfg.TRAINER.VPT.PROMPT_DEPTH_VISION = 1  # if set to 1, will represent shallow vision prompting only
-    # 添加未知类别检测阈值
     cfg.TRAINER.VPT.UNKNOWN_THRESHOLD = 0.5
 
 
     cfg.DATASET.SUBSAMPLE_CLASSES = "all"  # all, base or new
-    # 添加数据集OpenSet设置的默认配置
-    cfg.DATASET.OPEN_SET = False  # 默认不启用OpenSet设置
-    cfg.DATASET.KNOWN_CLASSES = []  # 默认已知类别列表为空
-    cfg.DATASET.UNKNOWN_CLASSES = []  # 默认未知类别列表为空
+    cfg.DATASET.OPEN_SET = False 
+    cfg.DATASET.KNOWN_CLASSES = []  
+    cfg.DATASET.UNKNOWN_CLASSES = [] 
 
 def setup_cfg(args):
     cfg = get_cfg_default()
@@ -265,4 +243,5 @@ if __name__ == "__main__":
         help="modify config options using the command-line",
     )
     args = parser.parse_args()
+
     main(args)
