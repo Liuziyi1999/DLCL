@@ -11,14 +11,13 @@ DATASET:
 #  TARGET_DOMAINS: ["BCN"]
   TARGET_DOMAINS: ["HAM"]
 
-  # 添加OpenSet设置
+
   OPEN_SET: False
-  # 已知类别列表
   KNOWN_CLASSES: ["Melanoma", "Basal cell carcinoma", "Melanocytic nevi", "Benign keratosis"]
-  # 未知类别列表
   UNKNOWN_CLASSES: ["Unknown"]
 
 
 MODEL:
   BACKBONE:
+
     NAME: "ViT-B/16" #"resnet50"
