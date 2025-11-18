@@ -4,9 +4,6 @@ DCoP-FCU: Dual-Level Contrastive Prompt Tuning for Out-of-Distribution Detection
 ## Overview
 This repository is a PyTorch implementation of the paper.  
 
-## Framework
-![Framework](https://github.com/Liuziyi1999/ADAPT/blob/main/assets/framework.png)
-
 ## How to Install
 Our code is built based on the source code of [CoOp](https://github.com/KaiyangZhou/CoOp). So you need to install some dependent environments.
 ```# install clip
