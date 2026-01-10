@@ -1,5 +1,5 @@
-# DCoP
-When Vision-Language Models meet Fetal Cardiac Ultrasound: Dual-Level Contrastive Prompt Tuning for Out-of-Distribution Detection
+# DLCL
+When Vision-Language Models Meet Fetal Cardiac Ultrasound: Dual-Level Contrastive Learning for Out-of-Distribution Detection
 
 ## Overview
 This repository is a PyTorch implementation of the paper.  
