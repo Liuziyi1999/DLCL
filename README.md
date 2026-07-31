@@ -23,7 +23,7 @@ cd ..
 You may follow the installation guide from [CLIP](https://github.com/KaiyangZhou/CoOp) and [dassl](https://github.com/KaiyangZhou/Dassl.pytorch).
 
 ## How to Run
-We provide the running scripts in ```scripts/```. Make sure you change the path in ```DATA``` and run the commands under ```DCoP/scripts/```.
+We provide the running scripts in ```scripts/```. Make sure you change the path in ```DATA``` and run the commands under ```DLCL/scripts/```.
 
 
 ### Load a pre-trained Model
