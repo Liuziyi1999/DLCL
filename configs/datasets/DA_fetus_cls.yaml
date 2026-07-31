@@ -11,14 +11,11 @@ DATASET:
 #  TARGET_DOMAINS: ["monocentric"]
   TARGET_DOMAINS: ["polycentric"]
 
-  # 添加OpenSet设置
   OPEN_SET: True
-  # 已知类别列表
   KNOWN_CLASSES: ["Three-Vessel and Trachea View", "Three-Vessel View", "Four-Chamber View", "Aortic Arch View", "Left Ventricular Outflow Tract View", "Right Ventricular Outflow Tract View", "Transverse Abdominal View"]
-  # 未知类别列表
   UNKNOWN_CLASSES: ["Unknown View"]
 
 
 MODEL:
   BACKBONE:
-    NAME: "ViT-B/16" #"resnet50"
+    NAME: "ViT-B/16"
