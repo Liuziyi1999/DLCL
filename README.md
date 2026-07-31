@@ -30,6 +30,33 @@ You may follow the installation guide from [CLIP](https://github.com/KaiyangZhou
 ## How to Run
 We provide the running scripts in ```scripts/```. Make sure you change the path in ```DATA``` and run the commands under ```DLCL/scripts/```.
 
+### Training
+
+The training scripts are provided in the `scripts/` directory. Before training, please update the dataset path specified by `DATA` in the corresponding script or configuration file.
+
+Run the following commands from the `DLCL/scripts/` directory:
+
+```bash
+cd DLCL/scripts
+bash train_ivlp.sh CAMELYON17 epo20+10_v8_t8_deep12_lossx_lossu_01 0.8 1.0 1
+```
+
+The general command format is:
+
+```bash
+bash train_ivlp.sh <DATASET> <CONFIG_NAME> <ARG_1> <ARG_2> <ARG_3>
+```
+
+For the provided example:
+
+* `CAMELYON17` specifies the training dataset.
+* `epo20+10_v8_t8_deep12_lossx_lossu_01` specifies the experiment configuration.
+* `0.8`, `1.0`, and `1` are the hyperparameters passed to the training script.
+
+Please refer to `train_ivlp.sh` for the exact definitions and supported values of these arguments.
+
+Training outputs, including model checkpoints and log files, will be saved to the output directory specified in the script or configuration file.
+
 
 ### Load a pre-trained Model
 We have upload a pretrained weight. You can load it and evaluate in the target domain. The command is
@@ -37,8 +64,12 @@ We have upload a pretrained weight. You can load it and evaluate in the target d
 bash eval.sh ISIC2019
 ```
 
-### Other information
-Currently, only the test version is accessible. The training version will be released to the public once the article is published.
+## Repository Status
+
+This repository provides the training and evaluation scripts for DLCL, together with a pre-trained model checkpoint for reproducing the reported results.
+
+Additional documentation and model checkpoints will be released upon publication of the official IJCAI 2026 proceedings.
+
 
 ### Acknowledgement
 Thanks for the following projects:
