@@ -62,7 +62,6 @@ def get_augmenter(augmenter_type: str,
 
     augmenter_type = augmenter_type.strip().lower()
 
-    # 随机裁剪，50%水平反转，归一化
     if augmenter_type == "simple":
         return nn.Sequential(
             K.RandomCrop(size=image_size, padding=padding, pad_if_needed=pad_if_needed,
@@ -71,7 +70,7 @@ def get_augmenter(augmenter_type: str,
             K.Normalize(mean=torch.tensor(dataset_mean, dtype=torch.float32),
                         std=torch.tensor(dataset_std, dtype=torch.float32)),
         )
-    # 随机水平翻转，随机尺寸裁剪，高斯模糊，颜色抖动，随机擦除，随机仿射变换，归一化
+
     elif augmenter_type == "fixed":
         return nn.Sequential(
             K.RandomHorizontalFlip(p=0.5),
@@ -105,7 +104,6 @@ def get_augmenter(augmenter_type: str,
                         std=torch.tensor(dataset_std, dtype=torch.float32)),
         )
 
-    # 使用 RandAugmentNS 进行随机增强，归一化
     elif augmenter_type == "randaugment":
         return nn.Sequential(
             # K.RandomCrop(size=image_size, padding=padding, pad_if_needed=pad_if_needed,
