@@ -1,0 +1,49 @@
+# Deep independent V-L Prompting
+DATALOADER:
+  TRAIN_X:
+    BATCH_SIZE: 128
+  TRAIN_U:
+    BATCH_SIZE: 128
+  TEST:
+    BATCH_SIZE: 256
+  NUM_WORKERS: 4
+
+INPUT:
+  SIZE: (224, 224)
+  INTERPOLATION: "bicubic"
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  TRANSFORMS: ["random_resized_crop", "random_flip", "normalize"]
+
+OPTIM:
+  NAME: "sgd"
+  LR: 0.0035
+  MAX_EPOCH: 2
+  LR_SCHEDULER: "cosine"
+  WARMUP_EPOCH: 1
+  WARMUP_TYPE: "constant"
+  WARMUP_CONS_LR: 1e-5
+
+TRAIN:
+  PRINT_FREQ: 100
+
+MODEL:
+  BACKBONE:
+    NAME: "ViT-B/16"
+
+DATASET:
+  OPEN_SET:  False  # True
+
+TRAINER:
+  IVLP:
+    N_CTX_VISION: 8
+    N_CTX_TEXT: 8
+    CTX_INIT: "A medical ultrasound image of the"
+    PREC: "amp"
+    T: 1.0
+    TAU: 0.8
+    U: 1.0
+    PROMPT_DEPTH_VISION: 12
+    PROMPT_DEPTH_TEXT: 12
+
+    UNKNOWN_THRESHOLD: 0.8
