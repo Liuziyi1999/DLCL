@@ -4,7 +4,7 @@ When Vision-Language Models Meet Fetal Cardiac Ultrasound: Dual-Level Contrastiv
 In this work, we introduce Dual-Level Contrastive Learning (DLCL) for out-of-distribution detection in fetal cardiac ultrasound. DLCL leverages the semantic knowledge of vision-language models and performs contrastive learning at two complementary levels to improve the discrimination between in-distribution and out-of-distribution samples.
 
 ### Framework
-![Framework](https://github.com/Liuziyi1999/CODA/blob/main/img/Framework.SVG)
+![Framework](https://github.com/Liuziyi1999/DLCL/blob/main/figs/framework3.pdf)
 
 ## Overview
 This repository is a PyTorch implementation of the paper.  
